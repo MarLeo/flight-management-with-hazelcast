@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: ticket-service
+  datasource:
+    #    url: jdbc:mysql://localhost:3306/otp
+    #    username: ticketdb
+    #    password: ticketpwd
+    #    driver-class-name: com.mysql.jdbc.Driver
+    tomcat:
+      max-wait: 20000
+      max-active: 50
+      max-idle: 20
+      min-idle: 15
+    schema: classpath:schema.sql
+    data: classpath:data.sql
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: validate
+      properties:
+        hibernate:
+          show_sql: true
+          use_sql_comments: true
+          format_sql: true
+          cache:
+            use_query_cache: true
+            use_second_level_cache: true
+            hazelcast:
+              use_native_client: true
+              native_client_address: 192.168.99.100:5701
+              native_client_group: dev
+              native_client_password: dev-pass
+              region:
+                factory_class: com.hazelcast.hibernate.HazelcastCacheRegionFactory
+  cache:
+    cache-names: ticketsCache
+    type: hazelcast
