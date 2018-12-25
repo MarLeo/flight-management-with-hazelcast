@@ -1,12 +1,9 @@
 package com.project.tchokonthe.config;
 
 
-import com.hazelcast.client.HazelcastClient;
-import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.config.*;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.spi.properties.GroupProperty;
 import com.hazelcast.spring.cache.HazelcastCacheManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +14,6 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PreDestroy;
 
-import static com.hazelcast.client.HazelcastClient.newHazelcastClient;
 import static com.hazelcast.config.EvictionPolicy.LRU;
 import static com.hazelcast.config.MaxSizeConfig.MaxSizePolicy.FREE_HEAP_SIZE;
 import static com.hazelcast.core.Hazelcast.newHazelcastInstance;
@@ -48,7 +44,6 @@ public class HazelcastConfig {
         networkConfig.getJoin()
                 .getTcpIpConfig()
                 .addMember("localhost")
-                .addMember("localhost")
                 .setEnabled(true);
 
         return new Config()
@@ -68,13 +63,13 @@ public class HazelcastConfig {
 
     @Bean
     HazelcastInstance hazelcastInstance() {
-        logger.debug("Configuring Hazelcast");
+        logger.info("Configuring Hazelcast");
         return newHazelcastInstance(hazelCastConfig());
     }
 
     @Bean
     CacheManager cacheManager() {
-        logger.debug("Starting HazelcastCacheManager");
+        logger.info("Starting HazelcastCacheManager");
         return new HazelcastCacheManager(hazelcastInstance());
     }
 
