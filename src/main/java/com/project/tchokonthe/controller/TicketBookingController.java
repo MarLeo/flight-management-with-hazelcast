@@ -13,7 +13,7 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/flight")
+@RequestMapping("/api/ticket")
 public class TicketBookingController {
 
     private final TicketBookingService ticketBookingService;

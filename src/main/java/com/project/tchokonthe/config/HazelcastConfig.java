@@ -4,9 +4,14 @@ package com.project.tchokonthe.config;
 import com.hazelcast.config.*;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
 import com.hazelcast.spring.cache.HazelcastCacheManager;
+import com.project.tchokonthe.entities.FlightReference;
+import com.project.tchokonthe.entities.Ticket;
+import com.project.tchokonthe.entities.key.FlightId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -62,6 +67,7 @@ public class HazelcastConfig {
     }
 
     @Bean
+    @Qualifier("flightManagementHzInstance")
     HazelcastInstance hazelcastInstance() {
         logger.info("Configuring Hazelcast");
         return newHazelcastInstance(hazelCastConfig());
@@ -71,6 +77,19 @@ public class HazelcastConfig {
     CacheManager cacheManager() {
         logger.info("Starting HazelcastCacheManager");
         return new HazelcastCacheManager(hazelcastInstance());
+    }
+
+    @Bean
+    IMap<Integer, Ticket> ticketIMap() {
+        logger.info("Instantiating tickets cache");
+        return hazelcastInstance().getMap("ticketsCache");
+    }
+
+
+    @Bean
+    IMap<FlightId, FlightReference> flightReferenceIMap() {
+        logger.info("Instantiating flight reference cache");
+        return hazelcastInstance().getMap("flightReferenceMap");
     }
 
 

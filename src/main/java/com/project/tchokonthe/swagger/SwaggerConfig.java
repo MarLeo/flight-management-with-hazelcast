@@ -21,8 +21,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo(String version) {
         return new ApiInfoBuilder()
-                .title("Flight Management API")
-                .description("Flight Management API for testing")
+                .title("FlightReference Management API")
+                .description("FlightReference Management API for testing")
                 .version(version)
                 .termsOfServiceUrl("Terms of Service")
                 .contact(contact)
@@ -32,7 +32,29 @@ public class SwaggerConfig {
     }
 
     @Bean
-    public Docket ingredient() {
+    public Docket ticket() {
+        return new Docket(SWAGGER_2)
+                .groupName("v1.0/ticket/api/docs")
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.project.tchokonthe.controller"))
+                .paths(regex("/api/ticket/v1.0.*"))
+                .build()
+                .apiInfo(apiInfo("1.0"));
+    }
+
+    @Bean
+    public Docket flight() {
+        return new Docket(SWAGGER_2)
+                .groupName("v1.0/flightReference/api/docs")
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.project.tchokonthe.controller"))
+                .paths(regex("/api/flightReference/v1.0.*"))
+                .build()
+                .apiInfo(apiInfo("1.0"));
+    }
+
+    @Bean
+    public Docket flights() {
         return new Docket(SWAGGER_2)
                 .groupName("v1.0/flight/api/docs")
                 .select()
@@ -41,4 +63,7 @@ public class SwaggerConfig {
                 .build()
                 .apiInfo(apiInfo("1.0"));
     }
+
+
+
 }

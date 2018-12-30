@@ -4,9 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.project.tchokonthe</groupId>
-    <artifactId>flight-management-with-hazelcast</artifactId>
+    <artifactId>flightReference-management-with-hazelcast</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>flight-management-with-hazelcast</name>
+    <name>flightReference-management-with-hazelcast</name>
     <description>Airlines management information system with hazelcast and database</description>
 
     <parent>
