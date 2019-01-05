@@ -16,9 +16,9 @@ import static javax.persistence.GenerationType.SEQUENCE;
 public class Flight implements Serializable {
 
     @Id
-    @GeneratedValue(generator="SEQUENCE_GENERATOR", strategy = SEQUENCE)
-    @SequenceGenerator(name="SEQUENCE_GENERATOR", sequenceName="SEQ_FLIGHTS_ID", allocationSize = 1)
-    @Column(name = "flight_id")
+    @GeneratedValue(generator="SEQUENCE_GENERATOR_FLIGHT", strategy = SEQUENCE)
+    @SequenceGenerator(name="SEQUENCE_GENERATOR_FLIGHT", sequenceName="SEQ_FLIGHTS_ID", allocationSize = 1)
+    @Column(name = "flight_id", nullable = false)
     private Long flightId;
 
     @Column(name = "departure_hour", nullable = false)

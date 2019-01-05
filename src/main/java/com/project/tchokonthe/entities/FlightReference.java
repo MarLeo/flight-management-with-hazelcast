@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.EAGER;
 
 
 @Entity
@@ -25,7 +26,7 @@ public class FlightReference implements Serializable {
     private FlightId flightId;
 
 
-    @OneToMany(cascade = ALL)
+    @OneToMany(cascade = ALL, fetch = EAGER)
     @JoinTable(name = "flights_reference",
             joinColumns =
                     {@JoinColumn(name = "departure"),
@@ -34,4 +35,7 @@ public class FlightReference implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "flight_id")})
     private Set<Flight> flights;
 
+    public FlightReference(FlightId flightId) {
+        this.flightId = flightId;
+    }
 }

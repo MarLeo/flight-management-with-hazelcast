@@ -83,11 +83,6 @@ public class TicketBookingService {
             }
             throw new TicketNotFoundException("Ticket with id " + ticketId + " not founded.");
         }
-
-
-        /*return ticket.ifPresent(map.put(1, null))
-
-                .orElseThrow(() -> new TicketNotFoundException("Ticket with id " + ticketId + " not founded."));*/
     }
 
     //    @Cacheable(value = "allTickets")

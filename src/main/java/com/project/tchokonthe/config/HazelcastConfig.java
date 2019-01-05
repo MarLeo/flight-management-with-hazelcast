@@ -6,6 +6,7 @@ import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import com.hazelcast.spring.cache.HazelcastCacheManager;
+import com.project.tchokonthe.entities.Flight;
 import com.project.tchokonthe.entities.FlightReference;
 import com.project.tchokonthe.entities.Ticket;
 import com.project.tchokonthe.entities.key.FlightId;
@@ -46,21 +47,24 @@ public class HazelcastConfig {
         networkConfig.getJoin()
                 .getMulticastConfig()
                 .setEnabled(false);
-        networkConfig.getJoin()
-                .getTcpIpConfig()
-                .addMember("localhost")
-                .setEnabled(true);
+        networkConfig.setPortCount(4);
+        networkConfig.setPublicAddress("169.254.55.132:5701");
+        networkConfig.setPublicAddress("169.254.55.132:5702");
+        networkConfig.setPublicAddress("169.254.55.132:5703");
+                /*.addMember("localhost")
+                .addMember("169.254.55.132")
+                .setEnabled(true);*/
 
         return new Config()
                 .setInstanceName("hazelcast-instance")
-                .addMapConfig(new MapConfig().setName("ticketsCache")
+                .addMapConfig(new MapConfig().setName("flightsBooking")
                         .setMaxSizeConfig(new MaxSizeConfig(200, FREE_HEAP_SIZE))
                         .setEvictionPolicy(LRU)
                         .setTimeToLiveSeconds(2000))
-                .addMapConfig(new MapConfig().setName("allTickets")
+                /*.addMapConfig(new MapConfig()*//*.setName("allTickets")*//*
                         .setMaxSizeConfig(new MaxSizeConfig(200, FREE_HEAP_SIZE))
                         .setEvictionPolicy(LRU)
-                        .setTimeToLiveSeconds(2000))
+                        .setTimeToLiveSeconds(2000))*/
                 .setManagementCenterConfig(mcc)
                 .setGroupConfig(groupConfig)
                 .setNetworkConfig(networkConfig);
@@ -90,6 +94,12 @@ public class HazelcastConfig {
     IMap<FlightId, FlightReference> flightReferenceIMap() {
         logger.info("Instantiating flight reference cache");
         return hazelcastInstance().getMap("flightReferenceMap");
+    }
+
+    @Bean
+    IMap<Long, Flight> flightsIMap() {
+        logger.info("Instantiating flights cache");
+        return hazelcastInstance().getMap("flightsMap");
     }
 
 

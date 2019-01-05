@@ -32,6 +32,7 @@ public class FlightId implements Comparable<FlightId>, Serializable {
         int dep = this.departure.compareTo(flightId.departure);
         int arr = this.arrival.compareTo(flightId.arrival);
         int day = this.flightDay.compareTo(flightId.flightDay);
-        return dep != 0 ? dep : arr != 0 ? arr : day;
+        return day != 0 ? day : dep != 0 ? dep : arr;
+//        return dep != 0 ? dep : arr != 0 ? arr : day;
     }
 }

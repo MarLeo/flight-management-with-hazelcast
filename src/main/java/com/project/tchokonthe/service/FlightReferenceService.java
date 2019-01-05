@@ -101,9 +101,12 @@ public class FlightReferenceService {
     }
 
     @Transactional
+    public FlightReference updateFlightInDB(FlightReference flightReference) {
+        return updateInDB(flightReference);
+
+    }
+
     public FlightReference updateFlight(FlightReference flightReference) {
-//        updateInDB(flightReference);
-        flightReferenceRepository.save(updateInDB(flightReference));
         final FlightId flightId = flightReference.getFlightId();
         if (flightReferenceMap.containsKey(flightId)) {
             final Set<Flight> flights = flightReferenceMap.get(flightId).getFlights();
@@ -113,27 +116,21 @@ public class FlightReferenceService {
             if (old != flightReferenceMap.get(flightId)) {
                 logger.info("Old flight " + old + " has been updated to " + flightReference + " in HZ");
             }
-//            flightReferenceRepository.save(flightReferenceMap.put(flightId, flightReference));
         }
+        updateInDB(flightReference);
         return flightReference;
 
-        /*else {
-            logger.info("Flight " + flightReference.getFlightId() + " was not in HZ it will be retrieve from Db and load into HZ");
-            final FlightReference save = updateInDB(flightReference);
-            flightReferenceMap.put(flightReference.getFlightId(), flightReference);
-            return save;
-        }*/
     }
 
     private FlightReference updateInDB(FlightReference flightReference) {
         final FlightReference flights = getFlightById(flightReference.getFlightId());
         final Set<Flight> flightSet = flights.getFlights();
         flightSet.addAll(flightReference.getFlights());
-        return flights;
+        return flightReferenceRepository.save(flights);
     }
 
     private Sort sortByDayAsc() {
-        return new Sort(DEFAULT_DIRECTION, "flightId.departure", "flightId.arrival", "flightId.flightDay");
+        return new Sort(DEFAULT_DIRECTION, "flightId.flightDay");
     }
 
 

@@ -56,10 +56,21 @@ public class SwaggerConfig {
     @Bean
     public Docket flights() {
         return new Docket(SWAGGER_2)
-                .groupName("v1.0/flight/api/docs")
+                .groupName("v1.0/flights/api/docs")
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.project.tchokonthe.controller"))
-                .paths(regex("/api/flight/v1.0.*"))
+                .paths(regex("/api/flights/v1.0.*"))
+                .build()
+                .apiInfo(apiInfo("1.0"));
+    }
+
+    @Bean
+    public Docket hazelcast() {
+        return new Docket(SWAGGER_2)
+                .groupName("v1.0/hazelcast/api/docs")
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.project.tchokonthe.controller"))
+                .paths(regex("/api/hazelcast/v1.0.*"))
                 .build()
                 .apiInfo(apiInfo("1.0"));
     }
