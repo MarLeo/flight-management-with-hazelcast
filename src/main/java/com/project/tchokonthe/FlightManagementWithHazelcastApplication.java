@@ -57,9 +57,6 @@ public class FlightManagementWithHazelcastApplication extends Application {
 
     public static void main(String[] args) {
         context = run(FlightManagementWithHazelcastApplication.class, args);
-
-//        System.out.println("Beans :" + Arrays.asList(context.getBeanDefinitionNames()));
-
         launch(args);
     }
 
